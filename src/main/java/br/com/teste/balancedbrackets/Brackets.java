@@ -8,12 +8,14 @@ import java.util.Scanner;
  */
 public class Brackets
 {
-   public static final String VALID = "is valid";
-   public static final String INVALID = "is not valid";
+   public static final String VALID = "Is valid";
+   public static final String INVALID = "Is not valid";
 
    public static void main(String args[])
    {
       Scanner in = new Scanner(System.in);
+
+      System.out.println("Digita uma sequência aqui -> ");
       String s = in.nextLine();
 
       if (s.isEmpty()){
@@ -29,23 +31,29 @@ public class Brackets
 
    /**
     * Remove os pares aceitos na string
-    * @param s
+    * @param sequencia
     * @return true - caso seja uma sequência valida false - caso a sequência seja inválida
     */
-   public static boolean removePar(String s){
-      String original = s;
+   public static boolean removePar(String sequencia){
 
-      original = original.replace("()", "");
-      original = original.replace("[]", "");
-      original = original.replace("{}", "");
+      //Se a string tiver alguma ocorrência de (), [] ou {}, o par será retirado da string
+      if (sequencia.contains("()") || sequencia.contains("[]") ||  sequencia.contains("{}")) {
 
+         sequencia = sequencia.replace("()", "");
+         sequencia = sequencia.replace("[]", "");
+         sequencia = sequencia.replace("{}", "");
 
-      if (original.isEmpty()){
-         return true;
-      } else if (!original.contains("()") && !original.contains("[]") && !original.contains("{}")) {
-         return false;
+         //Se todos os pares forem removidos a sequência é válida
+         if (sequencia.isEmpty()){
+            return true;
+         }
+
+         //Senão continua removendo os pares
+         return removePar(sequencia);
       }
 
-      return removePar(original);
+
+      //Se nenhum par for encontrado a sequência é inválida
+      return false;
    }
 }
